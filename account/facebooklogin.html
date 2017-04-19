@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>LUMEPlanner</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="../assets/css/jqm-demos.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<script src="../js/jquery.js"></script>
+	<script src="../assets/js/modernizr-custom.js"></script>
+	<script src="../assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+    <style>
+        .ui-grid-a img {
+       width  : 100%;
+       height : auto;
+   }
+          .ui-grid-b img {
+       width  : 100%;
+       height : auto;
+   }
+    </style>
+   
+</head>
+<body>
+<div data-role="page" id = "pageone" class="jqm-demos jqm-home">
+
+	<div data-role="header" class="jqm-header"  data-position="fixed" >
+		<h2><img src="../assets/img/logo-text.png" alt="jQuery Mobile"></h2>
+		<!--<p>Version <span class="jqm-version"></span></p> -->
+		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
+	</div><!-- /header -->
+
+  <div role="main" class="ui-content jqm-content">
+
+		<h1 align = "center">LUMEPlanner</h1>
+		
+		
+<div data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
+
+<ul class="jqm-list ui-alt-icon ui-nodisc-icon">
+<li data-filtertext="homepage" data-icon="home"><a href="../../">Homepage</a></li>
+<li data-filtertext="luoghi" data-icon = "location"><a href="../../myplaces/" data-icon="location" data-ajax="false">I miei luoghi</a></li>
+<li data-filtertext="viaggi" data-icon = "camera"><a href="../../mytravels/" data-icon="location" data-ajax="false">I miei viaggi</a></li>
+<li data-filtertext="percorsi" data-icon = "star"><a href="../../favoritepath/" data-ajax="false">I percorsi più visti</a></li>
+<li data-filtertext="account" data-icon="user"><a href="../../account/" data-ajax="false">Account</a></li>
+<li data-filtertext="assistenza" data-icon = "phone"><a href="../../assist/" data-ajax="false">Assistenza</a></li>
+
+</ul>
+</div>
+		
+	<script>
+    var redirect = 0;
+	var username;
+	var iduser;
+		function statusChangeCallback(response) {
+			console.log('statusChangeCallback');
+			console.log(response);
+			if (response.status === 'connected') {
+				 redirect = 1;
+                testAPI();
+               
+			// this block for application use 	
+/*			} else if (response.status === 'not_authorized') {
+
+				document.getElementById('status').innerHTML = 'Please log ' +
+				'into this app.';*/
+			} else {
+	//			document.getElementById('status').innerHTML = 'Login con il tuo ' +
+	//			'Facebook account';
+                
+                
+			}
+		}
+
+		function checkLoginState() {
+			FB.getLoginStatus(function (response) {
+				statusChangeCallback(response);
+			});
+		}
+        // facebook sdk code
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '265630773861521',
+				xfbml: true,
+				version: 'v2.8'
+			});
+			FB.getLoginStatus(function (response) {
+				statusChangeCallback(response);
+			});
+		};
+
+		// facebook sdk code
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.8&appId=265630773861521";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+		function testAPI() {
+			console.log('Welcome! Fetching your information.... ');
+
+			FB.api('/me', function (response) {
+				console.log('Successful login for: ' + response.name);
+				
+				var myJSON = JSON.stringify(response);
+				console.log(myJSON);
+				console.log(response.id);
+				username = response.name;
+				iduser = response.id;
+
+				document.getElementById('status').innerHTML = response.name + 'Grazie per esserti loggato.. ! </br>' ;
+				//+' We will use your name ='+username+' and facebook id ='+iduser+' to log you into LUMEPlanner application';
+               // window.location.href = "../";
+                
+                if(redirect == 1){ 
+                    document.getElementById('status').innerHTML = '<h3>'+response.name +'</h3>'+', '+ ' <h3> Grazie per esserti loggato a LUME Planner.. ! </h3></br>' ;
+                     window.setTimeout(window.location.href = "../",8000);
+                   
+                }
+			});
+		}
+        
+           
+        
+	</script>
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-bar ui-bar-a">
+        
+          <div data-role="controlgroup" data-mini="true">
+   
+         
+            <div id = "fb" align = "center">
+               <h3>Facebook Login</h3>
+               <br>
+               <br>
+                 <fb:login-button scope="public_profile,email"  onlogin="checkLoginState();"></fb:login-button>
+            </div>
+          </div>   	
+    </div>
+    </div>
+
+
+    <div id="status" bgcolor = "green"></div>
+    </div>
+  </div>
+</body>
+</html>

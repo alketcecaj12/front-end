@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Facebook Login JavaScript Example</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<script>
+
+	var username;
+	var iduser;
+		function statusChangeCallback(response) {
+			console.log('statusChangeCallback');
+			console.log(response);
+			if (response.status === 'connected') {
+				testAPI();
+			// this block for application use 	
+/*			} else if (response.status === 'not_authorized') {
+
+				document.getElementById('status').innerHTML = 'Please log ' +
+				'into this app.';*/
+			} else {
+				document.getElementById('status').innerHTML = 'Login con il tuo ' +
+				'Facebook account';
+			}
+		}
+
+		function checkLoginState() {
+			FB.getLoginStatus(function (response) {
+				statusChangeCallback(response);
+			});
+		}
+        // facebook sdk code
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '265630773861521',
+				xfbml: true,
+				version: 'v2.8'
+			});
+			FB.getLoginStatus(function (response) {
+				statusChangeCallback(response);
+			});
+		};
+
+		// facebook sdk code
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.8&appId=265630773861521";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+		function testAPI() {
+			console.log('Welcome! Fetching your information.... ');
+
+			FB.api('/me', function (response) {
+				console.log('Successful login for: ' + response.name);
+				
+				var myJSON = JSON.stringify(response);
+				console.log(myJSON);
+				console.log(response.id);
+				username = response.name;
+				iduser = response.id;
+
+				document.getElementById('status').innerHTML =
+				'Ora sei loggato a LUMEPlanner , ' + response.name + '! Continua a homepage..</br>' ;
+				//+' We will use your name ='+username+' and facebook id ='+iduser+' to log you into LUMEPlanner application';
+				setTimeout(function() {
+                     window.location='../'
+                }, 2000);
+			});
+		}
+	</script>
+	<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status", bgcolor = "green">
+</div>
+</body>
+</html>
