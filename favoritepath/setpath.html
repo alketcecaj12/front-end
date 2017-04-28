@@ -22,7 +22,7 @@
         }
 
         #map-content{
-            height: 90%;
+            height: 92%;
             padding: 0px; 
             margin:0px;
             z-index: -1;
@@ -30,7 +30,7 @@
   </style>
 
   <script type='text/javascript'>
-    //<![CDATA[
+    
     $(window).load(function(){
         
         var element = $('#mapPage');
@@ -42,7 +42,7 @@
     var map = L.map('map').fitWorld();
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 12,
+		maxZoom:18,
 		attribution: false,
 		id: 'mapbox.streets'
 	}).addTo(map);
@@ -67,7 +67,7 @@
         
         
     });
-    //]]> 
+    
     </script>
     
 </head>
@@ -101,12 +101,19 @@
 	
     <nav data-role="navbar" >
             <ul>
-                <li><a href="#"  data-icon="info" >Crea il tuo percorso</a></li>
+                <li><a href="http://localhost/lume/favoritepath/pathmask.html" class="ui-btn ui-shadow ui-corner-all ui-icon-carat-r ui-btn-icon-right ui-btn-active ui-state-persist "  >Crea il tuo percorso</a></li>
             </ul>
            
  </nav>
 	
 
+    
+  <!--  <a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-l ui-btn-icon-left">Left</a>
+<a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Right</a>
+<a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-u ui-btn-icon-top">Top</a>
+<a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-d ui-btn-icon-bottom">Bottom</a>
+    
+    -->
 </div><!-- /page -->
 </body>
 </html>
