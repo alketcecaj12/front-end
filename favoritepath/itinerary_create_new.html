@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="../css/themes/default/jquery.mobile-1.4.5.min.css">
 	<link rel="stylesheet" href="../assets/css/jqm-demos.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<link rel="stylesheet" type="text/css" href="build/jquery.datetimepicker.css"/>
 	<script src="../js/jquery.js"></script>
 	<script src="../assets/js/index.js"></script>
 	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
@@ -26,40 +27,8 @@
    }
     </style>
     
-    <script type="text/javascript">
-        $("document").ready(function() {
-            $("#datepick1").datepicker({
-                firstDay: 1,
-                dateFormat: "dd-mm-yy",
-                showButtonPanel: true,
-                currentText: "Today",
-                closeText: "Close",
-                
-                constrainInput: true,
-                
-                defaultDate: 3,
-                
-                minDate: 0,
-                maxDate: "+3M",
-
-                changeMonth: true,
-                changeYear: true,
-
-                numberOfMonths: 1,
-                
-               // beforeShowDay: onBeforeShowDay
-            });
-
-            function onBeforeShowDay(theDate) {
-                // Day 0 is Sunday, 6 is Saturday
-                if (theDate.getDay() == 0 || theDate.getDay() == 6) 
-                    return [false, "", "Weekends disabled"];
-                
-                return [true, ""];
-            }
-        
-        });
-    </script>
+<script src="build/jquery.datetimepicker.full.js"></script>
+<script src="build/jscode.js"></script>
 </head>
 <body>
 <div data-role="page" class="jqm-demos jqm-home">
@@ -80,7 +49,8 @@
     <br>
         
 	<h3 align = "center"> Seleziona data </h3>
-        <input type="text" data-filter-placeholder="Seleziona data" id="datepick1" />
+	<input type="text" onClick = datetimepicker() value="" id="datetimepicker"/>
+        
 	<br>
 	
 <h3 align = "center"> Seleziona location di partenza e arrivo </h3>
@@ -103,38 +73,38 @@
  </div> 
  <br>
  <br>
- <h3 align = "center"> Seleziona tra le categorie di attrazioni </h3>
+<h3 align = "center"> Seleziona tra le categorie di attrazioni </h3>
  <div class="ui-grid-b">
     <div class="ui-block-a">
 	 <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Musei
-        <input type="button" data-enhanced="true" value="Input value">
+        <input id = "musei" type="button" data-enhanced="true" value="Input value">
     </div>
 	</div>
     <div class="ui-block-b">
-	 <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Luoghi storici
-        <input type="button" data-enhanced="true" value="Input value">
+	 <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Attrazioni
+        <input id = "attrazioni" type="button" data-enhanced="true" value="Input value">
     </div>
 	</div>
     <div class="ui-block-c">
-	 <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Luoghi religiosi
-        <input type="button" data-enhanced="true" value="Input value">
+	 <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Monumenti
+        <input id = "monumenti" type="button" data-enhanced="true" value="Input value">
     </div>
 	</div>
 </div>
 <form class="ui-grid-b">
     <div class="ui-block-a">
-        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Monumenti
-        <input type="button" data-enhanced="true" value="Input value">
+        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Parchi
+        <input id = "parchi" type="button" data-enhanced="true" value="Input value">
     </div>
     </div>
     <div class="ui-block-b">
-        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Parchi
-        <input type="button" data-enhanced="true" value="Input value">
+        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Luoghi storici
+        <input id = "historical" type="button" data-enhanced="true" value="Input value">
     </div>
     </div>
     <div class="ui-block-c">
-         <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Attrazioni
-        <input type="button" data-enhanced="true" value="Input value">
+         <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-mini">Luoghi religiosi
+        <input id = "religious" type="button" data-enhanced="true" value="Input value">
     </div>
     </div>
 </form>
@@ -143,6 +113,43 @@
         <input type="button" data-enhanced="true" value="Input value">
     </div>
 </form>
+
+
+    
+         
+<script>
+ 	 $(document).ready(function() {
+	   $("#musei").click(function () {
+          window.location = 'museilist.html';
+	   });
+     }); 
+ $(document).ready(function() {
+	   $("#parchi").click(function () {
+          window.location = 'parchilist.html';
+	   });
+     }); 
+ $(document).ready(function() {
+	   $("#attrazioni").click(function () {
+          window.location = 'attrazionilist.html';
+	   });
+     }); 
+ $(document).ready(function() {
+	   $("#historical").click(function () {
+          window.location= 'historiclist.html';
+	   });
+     }); 
+ $(document).ready(function() {
+	   $("#religious").click(function () {
+          window.location = 'religiouslist.html';
+	   });
+     }); 
+ $(document).ready(function() {
+	   $("#monumenti").click(function () {
+          window.location = 'monumentilist.html';
+	   });
+     });	 
+</script>
+
 <br>
 <br>
 <br>
@@ -172,4 +179,5 @@
 </div><!-- /page -->
 
 </body>
+
 </html>

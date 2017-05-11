@@ -11,6 +11,17 @@
 	<script src="../js/jquery.js"></script>
 	<script src="../assets/js/index.js"></script>
 	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="jqueryui/jquery-ui.js"></script>
+    <link rel="stylesheet" href="jqueryui/style.css"/>
+    <link rel="stylesheet" href="jqueryui/jquery-ui.css"/>
+     <style>
+	   #data {
+	  padding-top: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    padding-left: 25px;
+	  }
+	  </style>
     <style>
         .ui-grid-a img {
        width  : 100%;
@@ -21,6 +32,7 @@
        height : auto;
    }
     </style>
+    
 </head>
 <body>
 <div data-role="page" class="jqm-demos jqm-home">
@@ -35,31 +47,68 @@
 
 		<h1 align = "center">LUMEPlanner</h1>
 
-		<p align = "center"><strong>Plan your next visit in Emilia Romagna!</strong></p>
-  
-   <!--   <label for="search-mini"></label>
-      <input type="search" name="search-mini" id="search-mini" value="" data-mini="true" /> -->
-        
-    
-        <div class="ui-grid-a ui-responsive">
-        	<div class="ui-block-a">
-        		<div class="jqm-block-content">
-                    <h3 align = "center"> <a href="starpath.html" data-icon="location" data-ajax="false"> Percorsi preferiti</a> </h3>
-                    <!--_assets\img -->
-                     <!--<img src = "_assets/img/bologna.jpg" data-display = "responsive"> -->
-                    
-        		</div>
-        	</div>
-        	<div class="ui-block-b">
-        		<div class="jqm-block-content">
-                    <h3 align = "center"> <a href="itinerary_create_new.html" data-icon="location" data-ajax="false">Imposta il tuo percorso</a> </h3>  
-                   <!-- <img src = "_assets/img/modena.jpg">-->
-        		</div>
-        	</div>        	
-        	
-        </div>
 
-	</div><!-- /content --> 
+<div id="results">
+<b>Results</b><br>
+<br>
+<br>
+</div>
+<div id="data">
+<b>Seleziona I luoghi religiosi e invia</b><br>
+</div>
+<br>
+<br>
+
+       
+        <script>
+ 	 $(document).ready(function() {
+	
+         $.getJSON("jsonlocal/modena.json", function(data) {
+       //$.getJSON("https://api.myjson.com/bins/woktb",function(data){
+             
+             list = '<br><form id="arrayCreator">';
+             list = list + '<input  type="submit" value="Invia">';
+			 list = list + '<br>';
+             $.each(data, function(index, element) {
+               var cat =  element.category;
+			 console.log('cat = '+cat);
+			   if(cat === 'religious_sites'){
+				 var partsOfStr = element.display_name.split(',');
+                
+				 list = list +'<label><h4><input type="checkbox" name="checkbox-0" value = "'+partsOfStr[0]+', ' 
+				 + element.place_id + '">    '+partsOfStr[0] +'</h4></label> <br>';
+				 }
+             });
+			
+             list = list + '</form>';
+             $('#data').append(list);
+			 
+             var arrayFromJson = [];
+             $('#arrayCreator').submit(function(e) {
+                 arrayFromJson = [];
+                 e.preventDefault();
+                 inputs = $("#arrayCreator input[type='checkbox']");
+                 $('#results').html("<b>Results</b><br>");
+                 for (x = 0; x < inputs.length; x++) {
+                     if ($(inputs[x]).is(":checked")) {
+                         arrayFromJson.push(inputs[x].value);
+                     }
+                 }
+                 console.log(arrayFromJson);
+                 for (x = 0; x < arrayFromJson.length; x++) {
+                     $('#results').append("<li>" + JSON.stringify(arrayFromJson[x]) + "</li>" + "<br>");
+                    
+                 }
+             });
+         });
+	
+     
+ });
+
+            
+           
+        </script>
+			</div><!-- /content --> 
 <div data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
 
 <ul class="jqm-list ui-alt-icon ui-nodisc-icon">
@@ -73,10 +122,9 @@
 </div><!-- /panel -->
 
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p align = "center">LUMEPlanner</p>
-		
+		<p align = "center">LUMEPlanner</p>	
 	</div><!-- /footer -->
 </div><!-- /page -->
 
-</body>
+    </body>
 </html>
